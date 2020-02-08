@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Field, reduxForm } from "redux-form";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  renderInput({ input, label }) {
+    return (
+      <div class="field">
+        <label>{label}</label>
+        <input {...input} />
+      </div>
+    );
+  }
+
+  onSubmit(formValues) {
+    console.log(formValues)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.props.handleSubmit(this.onSubmit)} class="ui form">
+        <Field
+          name="firstName"
+          component={this.renderInput}
+          label="First Name"
+        />
+        <Field name="lastName" component={this.renderInput} label="Last Name" />
+        <button class="ui button" type="submit">
+          Submit
+        </button>
+      </form>
+    );
+  }
 }
 
-export default App;
+export default reduxForm({ form: "signUp" })(App);
